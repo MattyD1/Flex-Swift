@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MainView: View {
     @State private var selectedTab = "One"
-    @State private var previousTab = "One"
     @State private var isSheetPresented = false
     
     var body: some View {
@@ -30,11 +29,6 @@ struct MainView: View {
                 .tag("Two")
             
             Text("New Item")
-                .tabItem {
-                    Image(systemName: "plus.circle.fill")
-                        .environment(\.symbolVariants, .none)
-                        .font(.caption)
-                }
                 .tag("Three")
             
             ExercisesView()
@@ -51,38 +45,34 @@ struct MainView: View {
                 }
                 .tag("Five")
         }
-        .onChange(of: selectedTab) { oldValue, newValue in
-            previousTab = oldValue
-            if newValue == "Three" {
-                selectedTab = oldValue
-                isSheetPresented.toggle()
-            }
-        }
+        .overlay(middleTabButton, alignment: .bottom)
+        .overlay(TopBorder, alignment: .bottom)
         .sheet(isPresented: $isSheetPresented) {
             ToolbarView()
                 .presentationDetents([.medium])
         }
     }
-}
-
-struct MiddleTabItem: View {
-    var body: some View {
+    
+    var middleTabButton: some View {
         Button(action: {
-            // Handle middle tab item tap action
-            print("Middle tab item tapped")
+            isSheetPresented.toggle()
         }) {
             Image(systemName: "plus.circle.fill")
                 .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 60, height: 60)
-                .foregroundColor(.secondary)
+                .frame(width: 42, height: 42)
+                .foregroundColor(.accentColor) // Customize the color as needed
+            
         }
-        .background(Color.white)
-        .clipShape(Circle())
-        .shadow(radius: 5)
+        .offset(y: -2)
+    }
+    
+    var TopBorder: some View {
+        Rectangle()
+            .frame(height: 1)
+            .offset(y: -48)
+            .foregroundColor(.border)
     }
 }
-
 
 #Preview {
     MainView()
