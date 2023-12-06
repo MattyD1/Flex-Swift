@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct MainView: View {
-    @State private var selectedTab = "One"
+    @State private var selectedTab = "Four"
     @State private var isSheetPresented = false
+    
+    init() {
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithOpaqueBackground()
+        UITabBar.appearance().standardAppearance = tabBarAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+    }
     
     var body: some View {
         TabView(selection: $selectedTab) {
