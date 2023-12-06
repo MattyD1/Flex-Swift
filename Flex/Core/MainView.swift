@@ -51,6 +51,7 @@ struct MainView: View {
                 }
                 .tag("Five")
         }
+        .toolbarBackground(.regularMaterial, for: .tabBar)
         .onChange(of: selectedTab) { oldValue, newValue in
             previousTab = oldValue
             if newValue == "Three" {
