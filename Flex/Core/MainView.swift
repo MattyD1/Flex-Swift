@@ -38,9 +38,9 @@ struct MainView: View {
             Text("New Item")
                 .tag("Three")
             
-            ExercisesView()
+            ExerciseListView()
                 .tabItem {
-                    Label("Exercise", systemImage: selectedTab == "Four" ? "dumbbell.fill" : "dumbbell")
+                    Label("Exercises", systemImage: selectedTab == "Four" ? "dumbbell.fill" : "dumbbell")
                         .environment(\.symbolVariants, .none)
                 }
                 .tag("Four")
@@ -53,7 +53,6 @@ struct MainView: View {
                 .tag("Five")
         }
         .overlay(middleTabButton, alignment: .bottom)
-        .overlay(TopBorder, alignment: .bottom)
         .sheet(isPresented: $isSheetPresented) {
             ToolbarView()
                 .presentationDetents([.medium])
@@ -64,20 +63,15 @@ struct MainView: View {
         Button(action: {
             isSheetPresented.toggle()
         }) {
-            Image(systemName: "plus.circle.fill")
-                .resizable()
-                .frame(width: 42, height: 42)
-                .foregroundColor(.accentColor) // Customize the color as needed
+            Image(systemName: "plus")
+                .font(.system(size: 20))
+                .padding(10)
+                .foregroundStyle(.background)
+                .background(Color.accentColor)
+                .clipShape(Circle())
             
         }
         .offset(y: -2)
-    }
-    
-    var TopBorder: some View {
-        Rectangle()
-            .frame(height: 1)
-            .offset(y: -48)
-            .foregroundColor(.border)
     }
 }
 

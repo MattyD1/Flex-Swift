@@ -6,31 +6,53 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ExercisesView: View {
+    
+    @Query private var allMovementPatterns: [MovementPattern]
     
     @State private var searchText: String = ""
     @State private var showSearchBar: Bool = false
     @State private var scrollOffset: CGFloat = 0.00
-    
+        
     init() {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
         UINavigationBar.appearance().standardAppearance = navigationBarAppearance
         UINavigationBar.appearance().compactAppearance = navigationBarAppearance
-//        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
     }
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                List {
-                    VStack (alignment: .leading) {
-                        ForEach(0..<30) { i in
-                            HStack {
-                                Text("Item \(i)").padding()
-                                Spacer()
-                            }
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+//                                ForEach(allMovementPatterns) { movement in
+//                                    Text(movement.movementName)
+//                                }
+                        ForEach(0..<10) { movement in
+                            Text("Movement")
+                                .padding(.vertical, 5)
+                                .fontWeight(.medium)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(.vertical, 8)
+                    .padding(.horizontal)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.quinary.opacity(0.75))
+                    )
+                    .padding(.horizontal)
+                }
+                
+                
+                
+                ScrollView {
+                    VStack (alignment: .leading, spacing: 4) {
+                        ForEach(0..<100) { movement in
+                            ExerciseCardView()
                         }
                     }
                     .background(
@@ -51,6 +73,9 @@ struct ExercisesView: View {
                         scrollOffset = offset
                     }
                 }
+                .padding(.horizontal)
+                .padding(.top)
+                .background(.quinary)
                 
                 if (showSearchBar) {
                     SearchBarView(searchText: $searchText)
@@ -59,7 +84,7 @@ struct ExercisesView: View {
                 
             }
             .navigationTitle("Exercises")
-//            .searchable(text: $searchText, placement: .navigationBarDrawer, prompt: Text("Search"))
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

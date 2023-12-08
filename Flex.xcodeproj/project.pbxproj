@@ -22,6 +22,10 @@
 		6A4B45612B2012470026E691 /* ExercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4B45602B2012470026E691 /* ExercisesView.swift */; };
 		6A4B45632B2012850026E691 /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4B45622B2012850026E691 /* MoreView.swift */; };
 		6ADC1BC62B211637008486B0 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADC1BC52B211637008486B0 /* SearchBarView.swift */; };
+		6ADC1BCA2B213145008486B0 /* MovementPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADC1BC92B213145008486B0 /* MovementPattern.swift */; };
+		6ADC1C282B22683C008486B0 /* MovementPatternContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADC1C272B22683C008486B0 /* MovementPatternContainer.swift */; };
+		6ADC1C2C2B22ABAB008486B0 /* ExerciseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADC1C2B2B22ABAB008486B0 /* ExerciseCardView.swift */; };
+		6ADC1C2E2B23861A008486B0 /* ExerciseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADC1C2D2B23861A008486B0 /* ExerciseListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +64,10 @@
 		6A4B45602B2012470026E691 /* ExercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesView.swift; sourceTree = "<group>"; };
 		6A4B45622B2012850026E691 /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		6ADC1BC52B211637008486B0 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		6ADC1BC92B213145008486B0 /* MovementPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MovementPattern.swift; path = Flex/Core/Components/MovementPattern.swift; sourceTree = SOURCE_ROOT; };
+		6ADC1C272B22683C008486B0 /* MovementPatternContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementPatternContainer.swift; sourceTree = "<group>"; };
+		6ADC1C2B2B22ABAB008486B0 /* ExerciseCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCardView.swift; sourceTree = "<group>"; };
+		6ADC1C2D2B23861A008486B0 /* ExerciseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +124,6 @@
 				6A4B454A2B1FFCC50026E691 /* Lib */,
 				6A4B454D2B1FFCD90026E691 /* Model */,
 				6A4B454C2B1FFCD10026E691 /* Services */,
-				6A4B451D2B1FFBF40026E691 /* FlexApp.swift */,
 				6A4B451F2B1FFBF40026E691 /* ContentView.swift */,
 				6A4B45212B1FFBF40026E691 /* Item.swift */,
 				6A4B45232B1FFBF60026E691 /* Assets.xcassets */,
@@ -153,6 +160,7 @@
 		6A4B45492B1FFCB60026E691 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				6A4B451D2B1FFBF40026E691 /* FlexApp.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -181,6 +189,7 @@
 		6A4B454C2B1FFCD10026E691 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				6ADC1C272B22683C008486B0 /* MovementPatternContainer.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -188,6 +197,7 @@
 		6A4B454D2B1FFCD90026E691 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6ADC1BC92B213145008486B0 /* MovementPattern.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -211,6 +221,8 @@
 			isa = PBXGroup;
 			children = (
 				6A4B45602B2012470026E691 /* ExercisesView.swift */,
+				6ADC1C2B2B22ABAB008486B0 /* ExerciseCardView.swift */,
+				6ADC1C2D2B23861A008486B0 /* ExerciseListView.swift */,
 			);
 			path = Exercise;
 			sourceTree = "<group>";
@@ -347,11 +359,15 @@
 			files = (
 				6ADC1BC62B211637008486B0 /* SearchBarView.swift in Sources */,
 				6A4B45202B1FFBF40026E691 /* ContentView.swift in Sources */,
+				6ADC1C2E2B23861A008486B0 /* ExerciseListView.swift in Sources */,
 				6A4B45632B2012850026E691 /* MoreView.swift in Sources */,
 				6A4B45592B2000AE0026E691 /* HistoryView.swift in Sources */,
 				6A4B45552B1FFE620026E691 /* DashboardView.swift in Sources */,
+				6ADC1C282B22683C008486B0 /* MovementPatternContainer.swift in Sources */,
+				6ADC1BCA2B213145008486B0 /* MovementPattern.swift in Sources */,
 				6A4B45222B1FFBF40026E691 /* Item.swift in Sources */,
 				6A4B45612B2012470026E691 /* ExercisesView.swift in Sources */,
+				6ADC1C2C2B22ABAB008486B0 /* ExerciseCardView.swift in Sources */,
 				6A4B45572B1FFFDA0026E691 /* MainView.swift in Sources */,
 				6A4B451E2B1FFBF40026E691 /* FlexApp.swift in Sources */,
 				6A4B455B2B20013B0026E691 /* ToolbarView.swift in Sources */,

@@ -23,12 +23,8 @@ struct SearchBarView: View {
         .padding(.all, 12)
         .background(
             RoundedRectangle(cornerRadius: 25)
-                .fill(.quinary.opacity(0.75))
+                .fill(.quinary)
         )
-        .padding(.horizontal)
-        .padding(.vertical, 8)
-        .background(Color.white)
-        .shadow(color: Color.border.opacity(0.4), radius: 20, x: 0, y:-5)
     }
 }
 
