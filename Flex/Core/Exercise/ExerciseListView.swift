@@ -30,83 +30,81 @@ struct ExerciseListView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                ScrollView {
-                    Button(action: {}) {
-                        Label("New Exercise", systemImage: "plus")
-                            .frame(maxWidth: .infinity)
-                            .padding(8)
-                    }
-                    .buttonStyle(.bordered)
-                    .padding(.horizontal)
-                    
-                    VStack (alignment: .leading, spacing: 4) {
-                        ForEach($groupedExercises) { $group in
-                            Section {
-                                ForEach(group.exercises) { exercise in
-                                    NavigationLink {
-                                        
-                                    } label : {
-                                        ExerciseCardView(exercise: exercise)
-                                    }
-                                }
-                            } header: {
-                                Text(String(group.firstLetter))
-                                    .font(.callout)
-                                    .fontWeight(.medium)
-                                    .foregroundStyle(.black)
-                                    .padding(.bottom, 8)
-                                    .padding(.top, 32)
-                                    .textCase(nil)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                            .padding(.leading)
-                        }
-                    }
-                    .background(
-                        GeometryReader {
-                            return Color.clear.preference(key: ViewOffsetKey.self,
-                                               value: -$0.frame(in: .named("scroll")).origin.y)
-                        }
-                    )
-                    .onPreferenceChange(ViewOffsetKey.self) { offset in
-                        withAnimation(.easeIn(duration: 0.2)) {
-                            print(offset)
-                            if offset > 10 {
-                                showSearchBar = offset < scrollOffset
-                            } else  {
-                                showSearchBar = true
-                            }
-                        }
-                        scrollOffset = offset
-                    }
+        VStack {
+            ScrollView {
+                Button(action: {}) {
+                    Label("New Exercise", systemImage: "plus")
+                        .frame(maxWidth: .infinity)
+                        .padding(8)
                 }
+                .buttonStyle(.bordered)
+                .padding(.horizontal)
                 
-                if (showSearchBar) {
-                    HStack {
-                        SearchBarView(searchText: $searchText)
-                            .transition(.opacity)
-                        
-                        Image(systemName: "line.3.horizontal.decrease")
-                            .font(.system(size: 16))
-                            .padding(16)
-                            .background(.quinary)
-                            .clipShape(Circle())
+                VStack (alignment: .leading, spacing: 4) {
+                    ForEach($groupedExercises) { $group in
+                        Section {
+                            ForEach(group.exercises) { exercise in
+                                NavigationLink {
+                                    
+                                } label : {
+                                    ExerciseCardView(exercise: exercise)
+                                }
+                            }
+                        } header: {
+                            Text(String(group.firstLetter))
+                                .font(.callout)
+                                .fontWeight(.medium)
+                                .foregroundStyle(.black)
+                                .padding(.bottom, 8)
+                                .padding(.top, 32)
+                                .textCase(nil)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .padding(.leading)
                     }
-                    .padding(.horizontal)
-                    .padding(.vertical, 8)
-                    .background(Color.white)
-                    .shadow(color: Color.border.opacity(0.4), radius: 20, x: 0, y:-10)
                 }
-               
-            }
-            .navigationTitle("Exercises")
-            .overlay {
-                if allExercises.isEmpty || groupedExercises.isEmpty {
-                    ContentUnavailableView {
-                        Label("No Exercises Found", systemImage: "tray.fill")
+                .background(
+                    GeometryReader {
+                        return Color.clear.preference(key: ViewOffsetKey.self,
+                                           value: -$0.frame(in: .named("scroll")).origin.y)
                     }
+                )
+                .onPreferenceChange(ViewOffsetKey.self) { offset in
+                    withAnimation(.easeIn(duration: 0.2)) {
+                        print(offset)
+                        if offset > 10 {
+                            showSearchBar = offset < scrollOffset
+                        } else  {
+                            showSearchBar = true
+                        }
+                    }
+                    scrollOffset = offset
+                }
+            }
+            
+            if (showSearchBar) {
+                HStack {
+                    SearchBarView(searchText: $searchText)
+                        .transition(.opacity)
+                    
+                    Image(systemName: "line.3.horizontal.decrease")
+                        .font(.system(size: 16))
+                        .padding(16)
+                        .background(.quinary)
+                        .clipShape(Circle())
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 8)
+                .background(Color.white)
+                .shadow(color: Color.border.opacity(0.4), radius: 20, x: 0, y:-10)
+            }
+           
+        }
+        .navigationTitle("Exercises")
+        .overlay {
+            if allExercises.isEmpty || groupedExercises.isEmpty {
+                ContentUnavailableView {
+                    Label("No Exercises Found", systemImage: "tray.fill")
                 }
             }
         }
@@ -153,6 +151,8 @@ struct ExerciseListView: View {
 
     ExerciseInfo.defaults.forEach { container.mainContext.insert($0) }
     
-    return ExerciseListView()
-        .modelContainer(container)
+    return NavigationStack {
+        ExerciseListView()
+    }
+    .modelContainer(container)
 }
