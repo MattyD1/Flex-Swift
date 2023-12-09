@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ExerciseCardView: View {
+    
+    @Bindable var exercise: ExerciseInfo
+    
     var body: some View {
         HStack {
             Image(systemName: "dumbbell")
@@ -16,7 +19,7 @@ struct ExerciseCardView: View {
             VStack(alignment: .leading) {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("Exercise Name")
+                        Text(exercise.name)
                             .fontWeight(.medium)
                         
                         HStack(spacing: 16) {
@@ -49,5 +52,5 @@ struct ExerciseCardView: View {
 }
 
 #Preview {
-    ExerciseCardView()
+    ExerciseCardView(exercise: ExerciseInfo(name: "Test Exercise", details: "Test Details"))
 }

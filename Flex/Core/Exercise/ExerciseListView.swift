@@ -11,7 +11,13 @@ import SwiftData
 struct ExerciseListView: View {
     
     @Query private var allMovementPatterns: [MovementPattern]
+    @Query(sort: [
+            SortDescriptor(\ExerciseInfo.name, order: .forward)
+        ], animation: .snappy) private var allExercises: [ExerciseInfo]
     
+    @Environment(\.modelContext) private var context
+    
+    @State private var groupedExercises: [GroupedAlphabeticalExercises] = []
     @State private var searchText: String = ""
     @State private var showSearchBar: Bool = true
     @State private var scrollOffset: CGFloat = 0.00
@@ -27,7 +33,6 @@ struct ExerciseListView: View {
         NavigationStack {
             VStack {
                 ScrollView {
-                    
                     Button(action: {}) {
                         Label("New Exercise", systemImage: "plus")
                             .frame(maxWidth: .infinity)
@@ -37,13 +42,17 @@ struct ExerciseListView: View {
                     .padding(.horizontal)
                     
                     VStack (alignment: .leading, spacing: 4) {
-                        ForEach(1..<5) { section in
+                        ForEach($groupedExercises) { $group in
                             Section {
-                                ForEach(1..<10) { text in
-                                    ExerciseCardView()
+                                ForEach(group.exercises) { exercise in
+                                    NavigationLink {
+                                        
+                                    } label : {
+                                        ExerciseCardView(exercise: exercise)
+                                    }
                                 }
                             } header: {
-                                Text("Test Header")
+                                Text(String(group.firstLetter))
                                     .font(.callout)
                                     .fontWeight(.medium)
                                     .foregroundStyle(.black)
@@ -93,10 +102,57 @@ struct ExerciseListView: View {
                
             }
             .navigationTitle("Exercises")
+            .overlay {
+                if allExercises.isEmpty || groupedExercises.isEmpty {
+                    ContentUnavailableView {
+                        Label("No Exercises Found", systemImage: "tray.fill")
+                    }
+                }
+            }
+        }
+        .onChange(of: allExercises, initial: true) { oldValue, newValue in
+            if newValue.count > oldValue.count || groupedExercises.isEmpty {
+                createGroupedExercises(newValue)
+            }
+        }
+
+    }
+    
+    /// Creating Grouped Exercises (Grouped by first Letter)
+    func createGroupedExercises(_ exercises: [ExerciseInfo]) {
+        Task.detached(priority: .high) {
+            let groupedDict = Dictionary(grouping: exercises) { exercise in
+                let firstLetter = exercise.name.first
+                                
+                return firstLetter?.isLetter == true ? firstLetter : "#"
+            }
+            
+            let sortedDictionary = groupedDict.sorted { (entry1, entry2) -> Bool in
+                // Assuming you want to sort alphabetically based on the string element
+                if let key1 = entry1.key, let key2 = entry2.key {
+                    return key1 < key2
+                }
+                return false
+            }
+            
+            await MainActor.run {
+                groupedExercises = sortedDictionary.compactMap({ dict in
+                    let firstLetter = dict.key
+                    return .init(firstLetter: firstLetter ?? "#", exercises: dict.value)
+                })
+            }
+
+            
         }
     }
 }
 
 #Preview {
-    ExerciseListView()
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: ExerciseInfo.self, configurations: config)
+
+    ExerciseInfo.defaults.forEach { container.mainContext.insert($0) }
+    
+    return ExerciseListView()
+        .modelContainer(container)
 }

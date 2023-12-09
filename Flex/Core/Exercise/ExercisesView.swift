@@ -26,61 +26,61 @@ struct ExercisesView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-//                                ForEach(allMovementPatterns) { movement in
-//                                    Text(movement.movementName)
-//                                }
-                        ForEach(0..<10) { movement in
-                            Text("Movement")
-                                .padding(.vertical, 5)
-                                .fontWeight(.medium)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                    .padding(.vertical, 8)
-                    .padding(.horizontal)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.quinary.opacity(0.75))
-                    )
-                    .padding(.horizontal)
-                }
-                
-                
-                
-                ScrollView {
-                    VStack (alignment: .leading, spacing: 4) {
-                        ForEach(0..<100) { movement in
-                            ExerciseCardView()
-                        }
-                    }
-                    .background(
-                        GeometryReader {
-                            return Color.clear.preference(key: ViewOffsetKey.self,
-                                               value: -$0.frame(in: .named("scroll")).origin.y)
-                        }
-                    )
-                    .onPreferenceChange(ViewOffsetKey.self) { offset in
-                        withAnimation(.easeIn(duration: 0.2)) {
-                            print(offset)
-                            if offset > 10 {
-                                showSearchBar = offset < scrollOffset
-                            } else  {
-                                showSearchBar = true
-                            }
-                        }
-                        scrollOffset = offset
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.top)
-                .background(.quinary)
-                
-                if (showSearchBar) {
-                    SearchBarView(searchText: $searchText)
-                        .transition(.opacity)
-                }
+//                ScrollView(.horizontal, showsIndicators: false) {
+//                    HStack {
+////                                ForEach(allMovementPatterns) { movement in
+////                                    Text(movement.movementName)
+////                                }
+//                        ForEach(0..<10) { movement in
+//                            Text("Movement")
+//                                .padding(.vertical, 5)
+//                                .fontWeight(.medium)
+//                                .foregroundStyle(.secondary)
+//                        }
+//                    }
+//                    .padding(.vertical, 8)
+//                    .padding(.horizontal)
+//                    .background(
+//                        RoundedRectangle(cornerRadius: 10)
+//                            .fill(.quinary.opacity(0.75))
+//                    )
+//                    .padding(.horizontal)
+//                }
+//                
+//                
+//                
+//                ScrollView {
+//                    VStack (alignment: .leading, spacing: 4) {
+//                        ForEach(0..<100) { movement in
+//                            ExerciseCardView()
+//                        }
+//                    }
+//                    .background(
+//                        GeometryReader {
+//                            return Color.clear.preference(key: ViewOffsetKey.self,
+//                                               value: -$0.frame(in: .named("scroll")).origin.y)
+//                        }
+//                    )
+//                    .onPreferenceChange(ViewOffsetKey.self) { offset in
+//                        withAnimation(.easeIn(duration: 0.2)) {
+//                            print(offset)
+//                            if offset > 10 {
+//                                showSearchBar = offset < scrollOffset
+//                            } else  {
+//                                showSearchBar = true
+//                            }
+//                        }
+//                        scrollOffset = offset
+//                    }
+//                }
+//                .padding(.horizontal)
+//                .padding(.top)
+//                .background(.quinary)
+//                
+//                if (showSearchBar) {
+//                    SearchBarView(searchText: $searchText)
+//                        .transition(.opacity)
+//                }
                 
             }
             .navigationTitle("Exercises")

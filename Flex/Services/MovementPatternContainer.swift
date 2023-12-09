@@ -11,13 +11,14 @@ import Foundation
 actor MovementPatternContainer {
     @MainActor
     static func create(shouldCreateDefaults: inout Bool) -> ModelContainer {
-        let schema = Schema([MovementPattern.self])
+        let schema = Schema([MovementPattern.self, ExerciseInfo.self])
         let config = ModelConfiguration()
         
         let container = try! ModelContainer(for: schema, configurations: config)
         
         if shouldCreateDefaults {
             MovementPattern.defaults.forEach { container.mainContext.insert($0) }
+            ExerciseInfo.defaults.forEach { container.mainContext.insert($0) }
             shouldCreateDefaults = false
         }
         

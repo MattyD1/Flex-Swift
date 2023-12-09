@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MainView: View {
     @State private var selectedTab = "Four"
@@ -76,5 +77,11 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: ExerciseInfo.self, configurations: config)
+
+    ExerciseInfo.defaults.forEach { container.mainContext.insert($0) }
+    
+    return MainView()
+        .modelContainer(container)
 }
