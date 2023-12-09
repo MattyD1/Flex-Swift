@@ -16,6 +16,7 @@ enum Tab {
 
 struct TabBarView: View {
     @Binding var selectedTab: Tab
+    @Binding var isSheetPresented: Bool
     
     var body: some View {
         VStack {
@@ -32,7 +33,7 @@ struct TabBarView: View {
                 
                 Spacer()
                 
-                Button(action: {  }) {
+                Button(action: { isSheetPresented.toggle() }) {
                     Image(systemName: "plus")
                         .font(.system(size: 20))
                         .padding(12)
@@ -86,5 +87,5 @@ struct TabBarButton: View {
 }
 
 #Preview {
-    TabBarView(selectedTab: .constant(.dashboard))
+    TabBarView(selectedTab: .constant(.dashboard), isSheetPresented: .constant(false))
 }
