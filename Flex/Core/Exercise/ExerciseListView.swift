@@ -32,7 +32,9 @@ struct ExerciseListView: View {
     var body: some View {
         VStack {
             ScrollView {
-                Button(action: {}) {
+                NavigationLink {
+                    AddNewExerciseInfoStepOneView()
+                } label: {
                     Label("New Exercise", systemImage: "plus")
                         .frame(maxWidth: .infinity)
                         .padding(8)
@@ -142,6 +144,14 @@ struct ExerciseListView: View {
 
             
         }
+    }
+}
+
+struct ViewOffsetKey: PreferenceKey {
+    typealias Value = CGFloat
+    static var defaultValue = CGFloat.zero
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value += nextValue()
     }
 }
 
