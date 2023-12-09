@@ -6,10 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MainView: View {
-    @State private var selectedTab = "One"
+    @State private var selectedTab = "Four"
     @State private var isSheetPresented = false
+    
+    init() {
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithOpaqueBackground()
+        UITabBar.appearance().standardAppearance = tabBarAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+    }
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -31,9 +39,9 @@ struct MainView: View {
             Text("New Item")
                 .tag("Three")
             
-            ExercisesView()
+            ExerciseListView()
                 .tabItem {
-                    Label("Exercise", systemImage: selectedTab == "Four" ? "dumbbell.fill" : "dumbbell")
+                    Label("Exercises", systemImage: selectedTab == "Four" ? "dumbbell.fill" : "dumbbell")
                         .environment(\.symbolVariants, .none)
                 }
                 .tag("Four")
@@ -46,7 +54,6 @@ struct MainView: View {
                 .tag("Five")
         }
         .overlay(middleTabButton, alignment: .bottom)
-        .overlay(TopBorder, alignment: .bottom)
         .sheet(isPresented: $isSheetPresented) {
             ToolbarView()
                 .presentationDetents([.medium])
@@ -57,23 +64,24 @@ struct MainView: View {
         Button(action: {
             isSheetPresented.toggle()
         }) {
-            Image(systemName: "plus.circle.fill")
-                .resizable()
-                .frame(width: 42, height: 42)
-                .foregroundColor(.accentColor) // Customize the color as needed
+            Image(systemName: "plus")
+                .font(.system(size: 20))
+                .padding(10)
+                .foregroundStyle(.background)
+                .background(Color.accentColor)
+                .clipShape(Circle())
             
         }
         .offset(y: -2)
     }
-    
-    var TopBorder: some View {
-        Rectangle()
-            .frame(height: 1)
-            .offset(y: -48)
-            .foregroundColor(.border)
-    }
 }
 
 #Preview {
-    MainView()
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: ExerciseInfo.self, configurations: config)
+
+    ExerciseInfo.defaults.forEach { container.mainContext.insert($0) }
+    
+    return MainView()
+        .modelContainer(container)
 }
